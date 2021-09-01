@@ -22,7 +22,7 @@ function App()
   }
 
   return (
-    <div className="App">
+    <div className="app">
       <header className="App-header">
         {posts.map( publicarPost )}
       </header>
