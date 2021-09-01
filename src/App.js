@@ -1,5 +1,6 @@
 import './App.css';
 import { Component } from 'react';
+import If from './components/If'
 
 class App extends Component
 {
@@ -43,7 +44,14 @@ class App extends Component
   {
     return (
       <div className="app">
+          <If conditional={this.state.posts.length > 0}>
             {this.state.posts.map( this.publicarPost )}
+          </If>
+          <If conditional={this.state.posts.length < 1}>
+            <p>Nenhuma publicação encontrada.</p>
+            <p>Caso queira recomeçar para o estado inicial, clique no botão abaixo.</p>
+            <button onClick={this.reset}>Recomeçar</button>
+          </If>
       </div>
     );
   }
