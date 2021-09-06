@@ -1,6 +1,7 @@
 import './App.css';
 import { Component } from 'react';
 import If from './components/If'
+import Post from './components/Post';
 
 class App extends Component
 {
@@ -15,18 +16,6 @@ class App extends Component
   }
 
   state = this.initialState;
-  
-  publicarPost = ( post ) =>
-  {
-    return (
-      <div key={post.id} className="post">
-        <h5>{post.titulo}</h5>
-        <p>{post.resumo}</p>
-        <button onClick={_ => this.removerPost( post.id )}>Excluir</button>
-        <hr />
-      </div>
-    );
-  }
   
   removerPost = ( id ) =>
   {
@@ -45,7 +34,7 @@ class App extends Component
     return (
       <div className="app">
           <If conditional={this.state.posts.length > 0}>
-            {this.state.posts.map( this.publicarPost )}
+            {this.state.posts.map( p => <Post post={p} removeHandle={() => this.removerPost( p.id )} /> )}
           </If>
           <If conditional={this.state.posts.length < 1}>
             <p>Nenhuma publicação encontrada.</p>
