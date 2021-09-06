@@ -20,12 +20,13 @@ class App extends Component
   removerPost = ( id ) =>
   {
     console.log( "Solicitado a remoção da publicação com identificador", id );
-    let newPosts = this.state.posts.filter( e => e.id !== id );
-    this.setState( {posts: newPosts} );
+    const posts = this.state.posts.filter( e => e.id !== id );
+    this.setState( {posts} );
   }
 
   reset = () =>
   {
+    console.log( "Solicitando a reinicialização do estado da aplicação" );
     this.setState( this.initialState );
   }
 
