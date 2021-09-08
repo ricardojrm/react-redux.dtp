@@ -2,26 +2,29 @@ import './assets/App.css';
 import { Component } from 'react';
 import If from './components/If'
 import Post from './components/Post';
+import { getPosts } from './api/posts';
 
 class App extends Component
 {
 
   SORT_BY = {
-    ASC: { name: "ASC", compare: function( a, b ) { return a.id - b.id; } },
-    DESC: { name: "DESC", compare: function( a, b ) { return b.id - a.id; } },
+    ASC: { name: "ASC", compare: function( a, b ) { return a.timestamp - b.timestamp; } },
+    DESC: { name: "DESC", compare: function( a, b ) { return b.timestamp - a.timestamp; } },
   }
 
   initialState = {
-    posts: [
-      {id: 1, titulo: "Título da primeira publicação", resumo: "Resumo da primeira publicação.", },
-      {id: 2, titulo: "Título da segunda publicação", resumo: "Resumo da segunda publicação.", },
-      {id: 3, titulo: "Título da terceira publicação", resumo: "Resumo da terceira publicação.", },
-      {id: 4, titulo: "Título da quarta publicação", resumo: "Resumo da quarta publicação.", },
-    ],
+    posts: [],
     sortBy: this.SORT_BY.ASC,
   }
 
   state = this.initialState;
+
+  componentDidMount()
+  {
+    const response = getPosts();
+    response.then( data => console.log( data ) );
+    response.then( data => this.setState( {posts: data.posts} ) )
+  }
 
   handleSort = ( sortBy ) =>
   {
