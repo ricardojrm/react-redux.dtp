@@ -1,4 +1,4 @@
-import './App.css';
+import './assets/App.css';
 import { Component } from 'react';
 import If from './components/If'
 import Post from './components/Post';
