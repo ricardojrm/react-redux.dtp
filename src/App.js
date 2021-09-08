@@ -35,7 +35,7 @@ class App extends Component
     return (
       <div className="app">
           <If conditional={this.state.posts.length > 0}>
-            {this.state.posts.map( p => <Post post={p} removeHandle={() => this.removerPost( p.id )} /> )}
+            {this.state.posts.map( p => <Post key={p.id} post={p} onRemove={() => this.removerPost( p.id )} /> )}
           </If>
           <If conditional={this.state.posts.length < 1}>
             <p>Nenhuma publicação encontrada.</p>

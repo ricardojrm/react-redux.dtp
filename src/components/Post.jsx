@@ -3,11 +3,11 @@ import React from 'react';
 function Post( props )
 {
     const post = props.post;
-    const doRemove = props.removeHandle;
+    const doRemove = props.onRemove;
 
     return (
 
-        <div key={post.id} className="post">
+        <div className="post">
             <h5>{post.titulo}</h5>
             <p>{post.resumo}</p>
             <button onClick={doRemove}>Excluir</button>
