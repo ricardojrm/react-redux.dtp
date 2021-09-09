@@ -2,8 +2,6 @@ import React from 'react';
 
 export default function If( {conditional, children} )
 {
-    console.log( conditional );
-
     let arrayChildren = null;
 
     if ( typeof children == Array ) {
