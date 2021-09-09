@@ -66,6 +66,8 @@ class App extends Component
 
     return (
       <div className="app">
+          <h1>Pilha Arretada</h1>
+          <hr />
           <button onClick={() => this.handleSort( this.SORT_BY.ASC )}>{this.SORT_BY.ASC.name}</button>
           <button onClick={() => this.handleSort( this.SORT_BY.DESC )}>{this.SORT_BY.DESC.name}</button>
           <If conditional={posts.length > 0}>
@@ -73,7 +75,7 @@ class App extends Component
           </If>
           <If conditional={posts.length < 1}>
             <p>Nenhuma publicação encontrada.</p>
-            <p>Caso queira recomeçar para o estado inicial, clique no botão abaixo.</p>
+            <p>Caso queira recomeçar a resenha, taca-lhê o dedo no botão abaixo.</p>
             <button onClick={this.reset}>Recomeçar</button>
           </If>
       </div>
