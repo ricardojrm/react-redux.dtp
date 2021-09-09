@@ -2,7 +2,7 @@ import './assets/App.css';
 import { Component } from 'react';
 import If from './components/If'
 import Post from './components/Post';
-import { getPosts } from './api/posts';
+import { getPosts, deletePost } from './api/posts';
 
 class App extends Component
 {
@@ -40,8 +40,11 @@ class App extends Component
   removerPost = ( id ) =>
   {
     console.log( "Solicitado a remoção da publicação com identificador", id );
-    const posts = this.state.posts.filter( e => e.id !== id );
-    this.setState( {posts} );
+    deletePost( id ).then( resultado => {
+      // Se a remoção da publicação for confirmada pelo backend...
+      const posts = this.state.posts.filter( e => e.id !== id );
+      this.setState( {posts} );
+    } );
   }
 
   reset = () =>
