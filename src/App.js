@@ -54,14 +54,16 @@ class App extends Component
 
   render()
   {
+    const { posts } = this.state;
+
     return (
       <div className="app">
           <button onClick={() => this.handleSort( this.SORT_BY.ASC )}>{this.SORT_BY.ASC.name}</button>
           <button onClick={() => this.handleSort( this.SORT_BY.DESC )}>{this.SORT_BY.DESC.name}</button>
-          <If conditional={this.state.posts.length > 0}>
+          <If conditional={posts.length > 0}>
             {this.sortPosts().map( p => <Post key={p.id} post={p} onRemove={() => this.removerPost( p.id )} /> )}
           </If>
-          <If conditional={this.state.posts.length < 1}>
+          <If conditional={posts.length < 1}>
             <p>Nenhuma publicação encontrada.</p>
             <p>Caso queira recomeçar para o estado inicial, clique no botão abaixo.</p>
             <button onClick={this.reset}>Recomeçar</button>
