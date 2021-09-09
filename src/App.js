@@ -19,11 +19,16 @@ class App extends Component
 
   state = this.initialState;
 
-  componentDidMount()
+  fetchData()
   {
     const response = getPosts();
     response.then( data => console.log( data ) );
     response.then( data => this.setState( {posts: data.posts} ) )
+  }
+
+  componentDidMount()
+  {
+    this.fetchData();
   }
 
   handleSort = ( sortBy ) =>
@@ -42,7 +47,7 @@ class App extends Component
   reset = () =>
   {
     console.log( "Solicitando a reinicialização do estado da aplicação" );
-    this.setState( this.initialState );
+    this.fetchData();
   }
 
   sortPosts = () =>
