@@ -13,14 +13,14 @@ class PostList extends Component
 
     fetchPosts()
     {
-        // Fetch posts...
-        // getPosts().then( data => console.log( "Publicações recuperadas com sucesso!" , data ) )
-        //           .then( data => this.setState( {posts: data.posts} ) );
-    
         const { categoria } = this.props.match.params;
-
+        
         console.log( "categoria" , categoria );
-
+        
+        // Fetch posts...
+        // getPosts().then( data => console.log( "Publicações recuperadas com sucesso!" , data.posts ) )
+        //           .then( data => this.setState( {posts: data.posts} ) );
+                  
         const response = getPosts( categoria );
         response.then( data => console.log( "Publicações recuperadas com sucesso!" , data.posts ) );
         response.then( data => this.setState( {posts: data.posts} ) );
