@@ -32,9 +32,14 @@ class PostList extends Component
         this.fetchPosts();
     }
 
-    componentDidUpdate()
+    componentDidUpdate( prevProps )
     {
         console.log( "Componente PostList atualizado." );
+        // console.log( prevProps );
+        if ( prevProps.match.params.categoria !== this.props.match.params.categoria )
+        {
+            this.fetchPosts();
+        }
     }
 
     doSort = () =>
