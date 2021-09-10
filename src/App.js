@@ -1,9 +1,8 @@
 import './assets/App.css';
 import { Component } from 'react';
+import Menu from './components/Menu';
 import PostList from './components/PostList';
 import { getPosts, deletePost } from './api/posts';
-import { getCategorias } from './api/categorias';
-import Menu from './components/Menu';
 
 class App extends Component
 {
