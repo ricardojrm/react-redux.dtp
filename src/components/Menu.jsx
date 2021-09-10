@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { getCategorias } from '../api/categorias';
 
 class Menu extends Component
@@ -27,14 +28,21 @@ class Menu extends Component
     render()
     {
         console.log( "Renderizando Menu" );
-
         const { categorias } = this.state;
-        console.log( categorias );
 
         return (
             <div id="menu">
+                <div>
+                    <Link to="/">
+                        Home
+                    </Link>
+                </div>
                 {categorias.map( categoria => 
-                    <div>{categoria.nome}</div>
+                    <div key={categoria.path}>
+                        <Link to={categoria.path}>
+                            {categoria.nome}
+                        </Link>
+                    </div>
                 )}
             </div>
         );
