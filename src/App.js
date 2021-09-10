@@ -9,7 +9,6 @@ class App extends Component
 
   initialState = {
     posts: [],
-    sortBy: SORT_BY.ASC,
   }
 
   state = this.initialState;
@@ -17,7 +16,7 @@ class App extends Component
   fetchData()
   {
     const response = getPosts();
-    response.then( data => console.log( data ) );
+    response.then( data => console.log( "Dados recuperados com sucesso!" ) );
     response.then( data => this.setState( {posts: data.posts} ) )
   }
 
@@ -44,13 +43,13 @@ class App extends Component
 
   render()
   {
-    const { posts, sortBy } = this.state;
+    const { posts } = this.state;
 
     return (
       <div className="app">
           <h1>Pilha Arretada</h1>
           <hr />
-          <PostList posts={posts} sortBy={sortBy} onRemove={this.removerPost} />
+          <PostList posts={posts} onRemove={this.removerPost} />
       </div>
     );
   }

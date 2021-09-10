@@ -1,42 +1,57 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Post from './Post';
 import If from './If';
 import { SORT_BY } from './constants';
 
-function PostList( props )
+class PostList extends Component
 {
-    let { posts, sortBy , onRemove } = props;
+    state = {
+        sortBy: this.props.sortBy || SORT_BY.ASC,
+    }
 
-    function doSort()
+    componentDidMount()
     {
-        // const sortBy = this.state.sortBy;
+        console.log( "Componente PostList montado." );
+    }
+
+    componentDidUpdate()
+    {
+        console.log( "Componente PostList atualizado." );
+    }
+
+    doSort = () =>
+    {
+        const { sortBy } = this.state;
         console.log( "Reordenando as publicações com", sortBy.name );
-        // return this.state.posts.slice().sort( sortBy.compare );
-        return posts.sort( sortBy.compare );
+        return this.props.posts.sort( sortBy.compare );
     }
 
-    function handleSort( newSortBy )
+    handleSort = ( sortBy ) =>
     {
-        console.log( "Solicitando o reordenamento das publicações usando", newSortBy.name );
-        sortBy = newSortBy;
-        console.log( sortBy );
-        // this.setState( {sortBy} );
+        console.log( "Solicitando o reordenamento das publicações usando", sortBy.name );
+        this.setState( {sortBy} );
     }
 
-    return (
-        <div>
-            <button onClick={() => handleSort( SORT_BY.ASC )}>{SORT_BY.ASC.name}</button>
-            <button onClick={() => handleSort( SORT_BY.DESC )}>{SORT_BY.DESC.name}</button>
-            <If conditional={posts.length > 0}>
-                {doSort().map( p => <Post key={p.id} post={p} onRemove={onRemove} /> )}
-            </If>
-            <If conditional={posts.length < 1}>
-                <p>Nenhuma publicação encontrada.</p>
-                <p>Caso queira começar a resenha, taca-lhê o dedo no botão abaixo.</p>
-                <button>Resenhar</button>
-            </If>
-        </div>
-    );
+    render()
+    {
+        console.log( "Renderizando PostList");
+        const posts = this.doSort();
+        
+        return (
+            <div>
+                <button onClick={() => this.handleSort( SORT_BY.ASC )}>{SORT_BY.ASC.name}</button>
+                <button onClick={() => this.handleSort( SORT_BY.DESC )}>{SORT_BY.DESC.name}</button>
+                <If conditional={posts.length > 0}>
+                    {posts.map( p => <Post key={p.id} post={p} onRemove={this.props.onRemove} /> )}
+                </If>
+                <If conditional={posts.length < 1}>
+                    <p>Nenhuma publicação encontrada.</p>
+                    <p>Caso queira começar a resenha, taca-lhê o dedo no botão abaixo.</p>
+                    <button>Resenhar</button>
+                </If>
+            </div>
+        );
+    }
 }
 
 export default PostList;
