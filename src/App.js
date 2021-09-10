@@ -3,16 +3,13 @@ import { Component } from 'react';
 import PostList from './components/PostList';
 import { getPosts, deletePost } from './api/posts';
 import { getCategorias } from './api/categorias';
+import Menu from './components/Menu';
 
 class App extends Component
 {
 
   initialState = {
     posts: [],
-    categorias: [ 
-      { nome: "primeira categoria", path: "/primeira-categoria"}, 
-      { nome: "segunda categoria", path: "/segunda-categoria"}, 
-    ],
   }
 
   state = this.initialState;
@@ -28,12 +25,12 @@ class App extends Component
     response.then( data => this.setState( {posts: data.posts} ) );
 
     // Fetch categorias...
-    getCategorias().then( data => console.log( "Categorias recuperadas com sucesso!" , data ) )
-                   .then( data => this.setState( {categorias: data} ) )
+    // getCategorias().then( data => console.log( "Categorias recuperadas com sucesso!" , data ) )
+    //                .then( data => this.setState( {categorias: data} ) )
 
-    const response2 = getCategorias();
-    response2.then( data => console.log( "Categorias recuperadas com sucesso!" , data ) );
-    response2.then( data => this.setState( {categorias: data} ) )
+    // const response2 = getCategorias();
+    // response2.then( data => console.log( "Categorias recuperadas com sucesso!" , data ) );
+    // response2.then( data => this.setState( {categorias: data} ) );
   }
 
   componentDidMount()
@@ -66,14 +63,12 @@ class App extends Component
   render()
   {
     console.log( "Renderizando App" );
-    const { posts, categorias } = this.state;
+    const { posts } = this.state;
 
     return (
       <div className="app">
           <h1>Pilha Arretada</h1>
-          {categorias.map( categoria => 
-            <div>categoria.nome</div>
-          )}
+          <Menu />
           <hr />
           <PostList posts={posts} onRemove={this.removerPost} />
       </div>
