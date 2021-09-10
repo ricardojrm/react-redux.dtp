@@ -1,8 +1,10 @@
 const SERVER_API = "http://localhost:5000";
 
-export const getPosts = function ()
+export const getPosts = function ( categoria )
 {
-    return fetch( `${SERVER_API}/posts` )
+    const args = ( categoria ) ? `?categoria=${categoria}` : '';
+
+    return fetch( `${SERVER_API}/posts${args}` )
            .then( response => response.json() )
 }
 
