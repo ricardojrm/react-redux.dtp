@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { SORT_BY } from './constants';
 import If from './If';
 import Post from './Post';
@@ -87,4 +88,4 @@ class PostList extends Component
     }
 }
 
-export default PostList;
+export default withRouter( PostList );

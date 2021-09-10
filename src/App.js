@@ -27,7 +27,12 @@ class App extends Component
             <h1>Pilha Arretada</h1>
             <Menu />
             <hr />
-            <Route exact path="/" component={PostList} />
+            <Route exact path="/">
+              <PostList />
+            </Route>
+            <Route path="/:categoria">
+              <PostList />
+            </Route>
             <Route path="/:categoria" component={PostList} />
           </BrowserRouter>
       </div>
