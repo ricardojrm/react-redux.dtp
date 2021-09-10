@@ -1,6 +1,6 @@
 import './assets/App.css';
 import { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Menu from './components/Menu';
 import PostList from './components/PostList';
 
@@ -27,13 +27,27 @@ class App extends Component
             <h1>Pilha Arretada</h1>
             <Menu />
             <hr />
-            <Route exact path="/">
-              <PostList />
-            </Route>
-            <Route path="/:categoria">
-              <PostList />
-            </Route>
-            <Route path="/:categoria" component={PostList} />
+            <Switch>
+              <Route path="/nova-resenha">
+                <div>
+                  <label htmlFor="titulo">Título</label>:
+                </div>
+                <input id="titulo" type="text" />
+                <div>
+                  <label htmlFor="resenha">Resenha</label>:
+                </div>
+                <textarea id="resenha" type="textarea" rows="5" cols="5" />
+                <div>
+                  <button>Taca-lhe o pau!</button>
+                </div>
+              </Route>
+              <Route path="/:categoria">
+                <PostList />
+              </Route>
+              <Route exact path="/">
+                <PostList />
+              </Route>
+            </Switch>
           </BrowserRouter>
       </div>
     );

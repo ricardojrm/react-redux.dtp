@@ -81,7 +81,9 @@ class PostList extends Component
                 <If conditional={sortedPosts.length < 1}>
                     <p>Nenhuma publicação encontrada.</p>
                     <p>Caso queira começar a resenha, taca-lhê o dedo no botão abaixo.</p>
-                    <button>Resenhar</button>
+                    <Link to="/nova-resenha">
+                        <button>Resenhar</button>
+                    </Link>
                 </If>
             </div>
         );
