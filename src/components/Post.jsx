@@ -2,8 +2,7 @@ import React from 'react';
 
 function Post( props )
 {
-    const post = props.post;
-    const doRemove = props.onRemove;
+    const { post, onRemove } = props;
 
     return (
 
@@ -12,7 +11,7 @@ function Post( props )
             <p>{post.corpo}</p>
             <p>{post.autor}</p>
             <p>{post.categoria}</p>
-            <button onClick={doRemove}>Excluir</button>
+            <button onClick={() => onRemove( post.id )}>Excluir</button>
             <hr />
         </div>
       

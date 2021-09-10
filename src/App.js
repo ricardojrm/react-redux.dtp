@@ -1,20 +1,15 @@
 import './assets/App.css';
 import { Component } from 'react';
-import If from './components/If'
-import Post from './components/Post';
+import PostList from './components/PostList';
 import { getPosts, deletePost } from './api/posts';
+import { SORT_BY } from './components/constants';
 
 class App extends Component
 {
 
-  SORT_BY = {
-    ASC: { name: "ASC", compare: function( a, b ) { return a.timestamp - b.timestamp; } },
-    DESC: { name: "DESC", compare: function( a, b ) { return b.timestamp - a.timestamp; } },
-  }
-
   initialState = {
     posts: [],
-    sortBy: this.SORT_BY.ASC,
+    sortBy: SORT_BY.ASC,
   }
 
   state = this.initialState;
@@ -29,12 +24,6 @@ class App extends Component
   componentDidMount()
   {
     this.fetchData();
-  }
-
-  handleSort = ( sortBy ) =>
-  {
-    console.log( "Solicitando o reordenamento das publicações usando", sortBy.name );
-    this.setState( {sortBy} );
   }
   
   removerPost = ( id ) =>
@@ -53,31 +42,15 @@ class App extends Component
     this.fetchData();
   }
 
-  sortPosts = () =>
-  {
-    const sortBy = this.state.sortBy;
-    console.log( "Reordenando as publicações com", sortBy.name );
-    return this.state.posts.slice().sort( sortBy.compare );
-  }
-
   render()
   {
-    const { posts } = this.state;
+    const { posts, sortBy } = this.state;
 
     return (
       <div className="app">
           <h1>Pilha Arretada</h1>
           <hr />
-          <button onClick={() => this.handleSort( this.SORT_BY.ASC )}>{this.SORT_BY.ASC.name}</button>
-          <button onClick={() => this.handleSort( this.SORT_BY.DESC )}>{this.SORT_BY.DESC.name}</button>
-          <If conditional={posts.length > 0}>
-            {this.sortPosts().map( p => <Post key={p.id} post={p} onRemove={() => this.removerPost( p.id )} /> )}
-          </If>
-          <If conditional={posts.length < 1}>
-            <p>Nenhuma publicação encontrada.</p>
-            <p>Caso queira recomeçar a resenha, taca-lhê o dedo no botão abaixo.</p>
-            <button onClick={this.reset}>Recomeçar</button>
-          </If>
+          <PostList posts={posts} sortBy={sortBy} onRemove={this.removerPost} />
       </div>
     );
   }
