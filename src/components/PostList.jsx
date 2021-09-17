@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter , Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { SORT_BY } from './constants';
 import If from './If';
 import Post from './Post';
@@ -14,7 +14,7 @@ class PostList extends Component
 
     fetchPosts()
     {
-        const { categoria } = this.props.match.params;
+        const { categoria } = this.props;
         
         // Fetch posts...
         getPosts( categoria ).then( data => { console.log( "Publicações recuperadas com sucesso!" , data ); return data; } )
@@ -31,7 +31,7 @@ class PostList extends Component
     {
         console.log( "Componente PostList atualizado." );
         // console.log( prevProps );
-        if ( prevProps.match.params.categoria !== this.props.match.params.categoria )
+        if ( prevProps.categoria !== this.props.categoria )
         {
             this.fetchPosts();
         }
@@ -110,4 +110,4 @@ class PostList extends Component
     }
 }
 
-export default withRouter( PostList );
+export default PostList;
