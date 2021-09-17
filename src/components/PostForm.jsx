@@ -42,6 +42,7 @@ function PostForm( {history} )
                 <input id="categoria" type="text" value={categoria} onChange={(e) => setCategoria( e.target.value )} />
                 <div>
                     <button>Taca-lhe o pau!</button>
+                    <button onClick={() => history.goBack()}>Dê ré, macho!</button>
                 </div>
             </form>
         </div>
