@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { SORT_BY } from './constants';
+import { SORT_TYPE } from './constants';
 import If from './If';
 import Post from './Post';
 import { getPosts, deletePost, dislikePost, likePost } from '../api/posts';
@@ -8,7 +8,7 @@ import { getPosts, deletePost, dislikePost, likePost } from '../api/posts';
 class PostList extends Component
 {
     state = {
-        sortBy: this.props.sortBy || SORT_BY.ASC,
+        sortBy: this.props.sortBy || SORT_TYPE.ASC,
         posts: [],
     }
 
@@ -93,8 +93,8 @@ class PostList extends Component
 
         return (
             <div>
-                <button onClick={() => this.handleSort( SORT_BY.ASC )}>{SORT_BY.ASC.name}</button>
-                <button onClick={() => this.handleSort( SORT_BY.DESC )}>{SORT_BY.DESC.name}</button>
+                <button onClick={() => this.handleSort( SORT_TYPE.ASC )}>{SORT_TYPE.ASC.name}</button>
+                <button onClick={() => this.handleSort( SORT_TYPE.DESC )}>{SORT_TYPE.DESC.name}</button>
                 <If conditional={sortedPosts.length > 0}>
                     {sortedPosts.map( p => <Post key={p.id} post={p} onLike={this.handleLike} onDislike={this.handleDislike} onRemove={this.handleDelete} /> )}
                 </If>
