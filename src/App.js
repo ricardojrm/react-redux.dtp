@@ -30,7 +30,7 @@ class App extends Component
             <Menu />
             <hr />
             <Switch>
-              <Route exact path="/">
+              <Route path="/" exact>
                 <Home />
               </Route>
               <Route path="/nova-resenha">
