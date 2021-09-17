@@ -1,4 +1,4 @@
-const SERVER_API = "http://localhost:5000";
+import { SERVER_API } from "./config";
 
 export const getCategorias = function ()
 {
