@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { savePost } from '../api/posts';
 
-function PostForm()
+function PostForm( {history} )
 {
     const [titulo, setTitulo] = useState("Título inicial");
     const [corpo, setCorpo] = useState("Resenha inicial");
@@ -11,7 +12,11 @@ function PostForm()
     function handleSubmit( event )
     {
         console.log( "Salvando a nova publicação." );
-        savePost( {titulo, corpo, autor, categoria} );
+        savePost( {titulo, corpo, autor, categoria} )
+        .then( data => {
+            console.log( history );
+            history.push( "/" );
+        });
     }
 
     return (
@@ -39,4 +44,4 @@ function PostForm()
     );
 }
 
-export default PostForm;
+export default withRouter( PostForm );
