@@ -41,7 +41,7 @@ class PostList extends Component
     {
         const { posts, sortBy } = this.state;
         console.log( "Reordenando as publicações com", sortBy.name );
-        return posts.sort( sortBy.compare );
+        return posts.slice().sort( sortBy.compare );
     }
 
     handleSort = ( sortBy ) =>
