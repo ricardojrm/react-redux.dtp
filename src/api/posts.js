@@ -1,4 +1,5 @@
 import { SERVER_API } from "./config";
+import { VOTE_TYPE } from "../components/constants";
 
 export const getPosts = function ( categoria )
 {
@@ -28,17 +29,17 @@ export const savePost = function ( post )
 
 export const likePost = function ( id )
 {
-    return votar( id, true );
+    return votar( id, VOTE_TYPE.LIKE );
 }
 
 export const dislikePost = function ( id )
 {
-    return votar( id, false );
+    return votar( id, VOTE_TYPE.DISLIKE );
 }
 
-const votar = function ( id, like )
+const votar = function ( id, voteType )
 {
-    const data = { opcao: ( like ) ? "positivo" : "negativo" };
+    const data = { opcao: voteType.value };
     const settings = {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
