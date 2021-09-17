@@ -1,25 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function PostForm()
 {
+    const [titulo, setTitulo] = useState("Título inicial");
+    const [corpo, setCorpo] = useState("Resenha inicial");
+    const [autor, setAutor] = useState("Autor inicial");
+    const [categoria, setCategoria] = useState("Categoria inicial");
+
+    function handleState( campo, novoValor )
+    {
+        if ( campo === "titulo" )
+        {
+            setTitulo( novoValor );
+        }
+
+        else if ( campo === "corpo" )
+        {
+            setCorpo( novoValor );
+        }
+
+        else if ( campo === "autor" )
+        {
+            setAutor( novoValor );
+        }
+
+        else if ( campo === "categoria" )
+        {
+            setCategoria( novoValor );
+        }
+    } 
+
     return (
         <div id="nova-resenha">
             <div>
                 <label htmlFor="titulo">Título</label>:
             </div>
-            <input id="titulo" type="text" />
+            <input id="titulo" type="text" value={titulo} onChange={(e) => handleState( "titulo" , e.target.value )} />
             <div>
                 <label htmlFor="resenha">Resenha</label>:
             </div>
-            <textarea id="resenha" type="textarea" rows="5" cols="17" />
+            <textarea id="resenha" type="textarea" rows="5" cols="17" value={corpo} onChange={(e) => handleState( "corpo" , e.target.value )} />
             <div>
                 <label htmlFor="autor">Autor</label>:
             </div>
-            <input id="autor" type="text" />
+            <input id="autor" type="text" value={autor} onChange={(e) => handleState( "autor" , e.target.value )} />
             <div>
                 <label htmlFor="categoria">Categoria</label>:
             </div>
-            <input id="categoria" type="text" />
+            <input id="categoria" type="text" value={categoria} onChange={(e) => handleState( "categoria" , e.target.value )} />
             <div>
                 <button>Taca-lhe o pau!</button>
             </div>
