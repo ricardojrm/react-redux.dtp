@@ -31,6 +31,9 @@ class Menu extends Component
                 <li>
                     <Link to="/">Home</Link>
                 </li>
+                <li>
+                    <Link to="/nova-resenha">Nova Resenha</Link>
+                </li>
                 {categorias.map( categoria => 
                     <li key={categoria.path}>
                         <Link to={categoria.path}>
