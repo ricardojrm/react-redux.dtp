@@ -16,15 +16,9 @@ class PostList extends Component
     {
         const { categoria } = this.props.match.params;
         
-        console.log( "categoria" , categoria );
-        
         // Fetch posts...
-        // getPosts().then( data => console.log( "Publicações recuperadas com sucesso!" , data.posts ) )
-        //           .then( data => this.setState( {posts: data.posts} ) );
-                  
-        const response = getPosts( categoria );
-        response.then( data => console.log( "Publicações recuperadas com sucesso!" , data.posts ) );
-        response.then( data => this.setState( {posts: data.posts} ) );
+        getPosts( categoria ).then( data => { console.log( "Publicações recuperadas com sucesso!" , data ); return data; } )
+                             .then( data => { this.setState( {posts: data.posts} ); } );
     }
 
     componentDidMount()
@@ -96,7 +90,7 @@ class PostList extends Component
     {
         console.log( "Renderizando PostList");
         const sortedPosts = this.doSort();
-        
+
         return (
             <div>
                 <button onClick={() => this.handleSort( SORT_BY.ASC )}>{SORT_BY.ASC.name}</button>

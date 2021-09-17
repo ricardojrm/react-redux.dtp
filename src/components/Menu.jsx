@@ -11,12 +11,8 @@ class Menu extends Component
     fetchData()
     {
       // Fetch categorias...
-    //   getCategorias().then( data => console.log( "Categorias recuperadas com sucesso!" , data ) )
-                    //  .then( data => this.setState( {categorias: data} ) );
-  
-      const response = getCategorias();
-      response.then( data => console.log( "Categorias recuperadas com sucesso!" , data ) );
-      response.then( data => this.setState( {categorias: data} ) );
+      getCategorias().then( data => { console.log( "Categorias recuperadas com sucesso!" , data ); return data; } )
+                     .then( data => this.setState( {categorias: data} ) );
     }
 
     componentDidMount()
@@ -31,20 +27,18 @@ class Menu extends Component
         const { categorias } = this.state;
 
         return (
-            <div id="menu">
-                <div>
-                    <Link to="/">
-                        Home
-                    </Link>
-                </div>
+            <ul id="menu">
+                <li>
+                    <Link to="/">Home</Link>
+                </li>
                 {categorias.map( categoria => 
-                    <div key={categoria.path}>
+                    <li key={categoria.path}>
                         <Link to={categoria.path}>
                             {categoria.nome}
                         </Link>
-                    </div>
+                    </li>
                 )}
-            </div>
+            </ul>
         );
     }
 }
