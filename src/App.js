@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Menu from './components/Menu';
 import Home from './components/Home';
+import Categoria from './components/Categoria';
 
 class App extends Component
 {
@@ -31,6 +32,7 @@ class App extends Component
               <Route exact path="/">
                 <Home />
               </Route>
+              <Route path="/:categoria" component={Categoria} />
             </Switch>
           </BrowserRouter>
       </div>
