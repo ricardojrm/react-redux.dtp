@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { savePost } from '../api/posts';
 
 function PostForm()
 {
@@ -6,6 +7,12 @@ function PostForm()
     const [corpo, setCorpo] = useState("Resenha inicial");
     const [autor, setAutor] = useState("Autor inicial");
     const [categoria, setCategoria] = useState("Categoria inicial");
+
+    function handleSubmit( event )
+    {
+        console.log( "Salvando a nova publicação." );
+        savePost( {titulo, corpo, autor, categoria} );
+    }
 
     return (
         <div id="nova-resenha">
@@ -26,7 +33,7 @@ function PostForm()
             </div>
             <input id="categoria" type="text" value={categoria} onChange={(e) => setCategoria( e.target.value )} />
             <div>
-                <button>Taca-lhe o pau!</button>
+                <button onClick={handleSubmit}>Taca-lhe o pau!</button>
             </div>
         </div>
     );

@@ -14,6 +14,18 @@ export const deletePost = function ( id )
            .then( response => response.json() );
 }
 
+export const savePost = function ( post )
+{
+    const settings = {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify( post ),
+    };
+
+    return fetch( `${SERVER_API}/posts` , settings )
+           .then( response => response.json() );
+}
+
 export const likePost = function ( id )
 {
     return votar( id, true );
