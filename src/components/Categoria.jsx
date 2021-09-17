@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import PostList from './PostList';
 
 function Categoria( props )
@@ -13,4 +14,4 @@ function Categoria( props )
     );
 }
 
-export default Categoria;
+export default withRouter( Categoria );
