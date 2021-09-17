@@ -1,26 +1,13 @@
 import './assets/App.css';
-import { Component } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Menu from './components/Menu';
 import Home from './components/Home';
 import Categoria from './components/Categoria';
 import PostForm from './components/PostForm';
 
-class App extends Component
+function App()
 {
-
-  componentDidMount()
-  {
-    console.log( "Componente App montado" );
-  }
-
-  componentDidUpdate()
-  {
-    console.log( "Componente App atualizado" );
-  }
-
-  render()
-  {
     console.log( "Renderizando App" );
 
     return (
@@ -43,7 +30,6 @@ class App extends Component
           </BrowserRouter>
       </div>
     );
-  }
 }
 
 export default App;
