@@ -1,113 +1,105 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SORT_TYPE } from './constants';
 import If from './If';
 import Post from './Post';
 import { getPosts, deletePost, dislikePost, likePost } from '../api/posts';
 
-class PostList extends Component
+function PostList( props )
 {
-    state = {
-        sortBy: this.props.sortBy || SORT_TYPE.ASC,
-        posts: [],
-    }
+    const [posts, setPosts] = useState( [] );
+    const [sortBy, setSortBy] = useState( props.sortBy || SORT_TYPE.ASC );
 
-    fetchPosts()
+    useEffect( () => {
+        console.log( "useEffect acionado!");
+        fetchPosts();
+    }
+    , [] );
+
+    function fetchPosts()
     {
-        const { categoria } = this.props;
+        const { categoria } = props;
         
         // Fetch posts...
         getPosts( categoria ).then( data => { console.log( "Publicações recuperadas com sucesso!" , data ); return data; } )
-                             .then( data => { this.setState( {posts: data.posts} ); } );
+                             .then( data => { setPosts( data.posts ); } );
     }
 
-    componentDidMount()
-    {
-        console.log( "Componente PostList montado." );
-        this.fetchPosts();
-    }
+    // componentDidUpdate( prevProps )
+    // {
+    //     console.log( "Componente PostList atualizado." );
+    //     // console.log( prevProps );
+    //     if ( prevProps.categoria !== this.props.categoria )
+    //     {
+    //         this.fetchPosts();
+    //     }
+    // }
 
-    componentDidUpdate( prevProps )
+    function doSort()
     {
-        console.log( "Componente PostList atualizado." );
-        // console.log( prevProps );
-        if ( prevProps.categoria !== this.props.categoria )
-        {
-            this.fetchPosts();
-        }
-    }
-
-    doSort = () =>
-    {
-        const { posts, sortBy } = this.state;
         console.log( "Reordenando as publicações com", sortBy.name );
         return posts.slice().sort( sortBy.compare );
     }
 
-    handleSort = ( sortBy ) =>
+    function handleSort( sortBy )
     {
         console.log( "Solicitando o reordenamento das publicações usando", sortBy.name );
-        this.setState( {sortBy} );
+        setSortBy( sortBy );
     }
 
-    handleLike = ( id ) =>
+    function refreshPost( id, resultado )
     {
-        console.log( "Solicitado o like na publicação com identificador", id );
-        likePost( id ).then( resultado => {
-            // Se a solicitação for confirmada com sucesso pelo backend...
-            // Removo a publicação que foi votada
-            const filtrados = this.state.posts.filter( e => e.id !== id );
-            // Adiciono ela novamente em seguida, mas agora com seus dados atualizados...
-            const posts = filtrados.concat( resultado );
-            this.setState( {posts} );
-        } );
+        console.log( "Renovando a publicação com identificador", id );
+        // Se a solicitação for confirmada com sucesso pelo backend...
+        // Renovando a publicação que acabou de ser votada...
+        const filtrados = posts.filter( e => e.id !== id );
+        const renovados = filtrados.concat( resultado );
+        setPosts( renovados );
+        
+        return renovados;
     }
 
-    handleDislike = ( id ) =>
+    function handleLike( id )
     {
-        console.log( "Solicitado a dislike na publicação com identificador", id );
-        dislikePost( id ).then( resultado => {
-            // Se a solicitação for confirmada com sucesso pelo backend...
-            // Removo a publicação que foi votada
-            const filtrados = this.state.posts.filter( e => e.id !== id );
-            // Adiciono ela novamente em seguida, mas agora com seus dados atualizados...
-            const posts = filtrados.concat( resultado );
-            this.setState( {posts} );
-        } );
+        console.log( "Solicitado like na publicação com identificador", id );
+        likePost( id ).then( resultado => refreshPost( id,  resultado ) );
     }
 
-    handleDelete = ( id ) =>
+    function handleDislike( id )
+    {
+        console.log( "Solicitado dislike na publicação com identificador", id );
+        dislikePost( id ).then( resultado => refreshPost( id,  resultado ) );
+    }
+
+    function handleDelete( id )
     {
         console.log( "Solicitado a remoção da publicação com identificador", id );
         deletePost( id ).then( resultado => {
             // Se a solicitação for confirmada com sucesso pelo backend...
-            const posts = this.state.posts.filter( e => e.id !== id );
-            this.setState( {posts} );
-        } );
+            const filtrados = posts.filter( e => e.id !== id );
+            setPosts( filtrados );
+        });
     }
 
-    render()
-    {
-        console.log( "Renderizando PostList");
-        const sortedPosts = this.doSort();
+    console.log( "Renderizando PostList" );
+    const sortedPosts = doSort();
 
-        return (
-            <div>
-                <button onClick={() => this.handleSort( SORT_TYPE.ASC )}>{SORT_TYPE.ASC.name}</button>
-                <button onClick={() => this.handleSort( SORT_TYPE.DESC )}>{SORT_TYPE.DESC.name}</button>
-                <If conditional={sortedPosts.length > 0}>
-                    {sortedPosts.map( p => <Post key={p.id} post={p} onLike={this.handleLike} onDislike={this.handleDislike} onRemove={this.handleDelete} /> )}
-                </If>
-                <If conditional={sortedPosts.length < 1}>
-                    <p>Nenhuma publicação encontrada.</p>
-                    <p>Caso queira começar a resenha, taca-lhê o dedo no botão abaixo.</p>
-                    <Link to="/nova-resenha">
-                        <button>Resenhar</button>
-                    </Link>
-                </If>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <button onClick={() => handleSort( SORT_TYPE.ASC )}>{SORT_TYPE.ASC.name}</button>
+            <button onClick={() => handleSort( SORT_TYPE.DESC )}>{SORT_TYPE.DESC.name}</button>
+            <If conditional={sortedPosts.length > 0}>
+                {sortedPosts.map( p => <Post key={p.id} post={p} onLike={handleLike} onDislike={handleDislike} onRemove={handleDelete} /> )}
+            </If>
+            <If conditional={sortedPosts.length < 1}>
+                <p>Nenhuma publicação encontrada.</p>
+                <p>Caso queira começar a resenha, taca-lhê o dedo no botão abaixo.</p>
+                <Link to="/nova-resenha">
+                    <button>Resenhar</button>
+                </Link>
+            </If>
+        </div>
+    );
 }
 
 export default PostList;
