@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { SORT_TYPE } from './constants';
 import If from './If';
 import Post from './Post';
@@ -9,31 +9,32 @@ function PostList( props )
 {
     const [posts, setPosts] = useState( [] );
     const [sortBy, setSortBy] = useState( props.sortBy || SORT_TYPE.ASC );
+    const params = useParams();
 
     useEffect( () => {
         console.log( "useEffect acionado!");
         fetchPosts();
     }
-    , [] );
+    , [params] );
 
     function fetchPosts()
     {
         const { categoria } = props;
         
+        if ( categoria ) {
+
+            console.log( "Solicitando as publicações da categoria", categoria );
+
+        } else {
+
+            console.log( "Solicitando todas as publicações" );
+            
+        }
+        
         // Fetch posts...
         getPosts( categoria ).then( data => { console.log( "Publicações recuperadas com sucesso!" , data ); return data; } )
                              .then( data => { setPosts( data.posts ); } );
     }
-
-    // componentDidUpdate( prevProps )
-    // {
-    //     console.log( "Componente PostList atualizado." );
-    //     // console.log( prevProps );
-    //     if ( prevProps.categoria !== this.props.categoria )
-    //     {
-    //         this.fetchPosts();
-    //     }
-    // }
 
     function doSort()
     {
