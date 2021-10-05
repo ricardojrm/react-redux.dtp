@@ -5,6 +5,7 @@ import Menu from './components/Menu';
 import Home from './components/Home';
 import Categoria from './components/Categoria';
 import PostForm from './components/PostForm';
+import { SORT_TYPE } from './components/constants';
 
 function App()
 {
@@ -24,7 +25,7 @@ function App()
                 <PostForm />
               </Route>
               <Route path="/:categoria">
-                <Categoria />
+                <Categoria sortBy={SORT_TYPE.DESC} />
               </Route>
             </Switch>
           </BrowserRouter>
